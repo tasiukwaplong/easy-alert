@@ -35,6 +35,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
+                <!-- {{userHistory}} -->
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
@@ -43,36 +44,15 @@
                       <th>Message</th>
                       <th>Cost</th>
                       <th>Status</th>
-                      <th>Option</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th>S/N</th>
-                      <th>Date</th>
-                      <th>Message</th>
-                      <th>Cost</th>
-                      <th>Status</th>
-                      <th>Option</th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                    <tr>
-                      <td>0</td>
-                      <td>12/12/19</td>
-                      <td>No lectures</td>
-                      <td><em style="color:red">- 20</em></td>
-                      <td>Delivered</td>
-                      <td>-</td>
-                    </tr>
-
-                    <tr>
-                      <td>0</td>
-                      <td>12/12/19</td>
-                      <td>Referal bonus</td>
-                      <td><em style="color:green">+ 20</em></td>
-                      <td>Delivered</td>
-                      <td>-</td>
+                  <tbody v-for="(history, i) in userHistory" v-bind:key="history.id">
+                    <tr v-if="history.date_and_time">
+                      <td>{{(i + 1)}}</td>
+                      <td>{{history.date_and_time}}</td>
+                      <td>{{history.message}}</td>
+                      <td>{{history.cost}}</td>
+                      <td v-html="historyStatus(history.status)"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -100,13 +80,43 @@
 
 <script>
 // @ is an alias to /src
-import Footer from './includes/Footer.vue'
-import SideBar from './includes/SideBar.vue'
+import Footer from "./includes/Footer.vue";
+import SideBar from "./includes/SideBar.vue";
+import { login } from "../controller/mixins";
+import e from "../controller/easyAlert";
 
 export default {
-  name: 'History',
+  name: "History",
+  data() {
+    return {
+      userHistory: []
+    };
+  },
   components: {
-    Footer, SideBar
+    Footer,
+    SideBar
+  },
+  mixins: [login],
+  methods: {
+    historyStatus: function(status){
+      const STATUS = {
+        "0":'<span style="color:red">-</span>',
+        "1":'<span style="color:red">SUCCESFUL</span>',
+        "2":'<span style="color:red">PENDING</span>',
+        "3":'<span style="color:red">FAILED</span>',
+        "4":'<span style="color:red">ERROR</span>',
+      }
+      return STATUS[status];
+    }
+  },
+  created: async function() {
+    this.userData().then((re)=>{
+      e.getUserHistroy({user: re.message.usernmae}).then((history)=>{
+        this.userHistory = history.message
+      });
+    });
+    // this.getUserHistory().then((re)=>{this.userHistory = re});
+    // console.log(user);
   }
-}
+};
 </script>

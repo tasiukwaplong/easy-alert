@@ -27,28 +27,44 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item" v-if="type == 'sender'">
+      <a 
+        class="nav-link collapsed" 
+        href="javascript:void(0)"
+        data-toggle="modal" data-target="#modelId"
+        >
+        <i class="fa fa-fw fa-envelop"></i>Send Message
+        </a>
+      </li>
+      <li class="nav-item" v-if="type == 'sender' || type == 'subscriber'">
+      <a class="nav-link collapsed" 
+        href="javascript:void(0)"
+        data-toggle="modal" data-target="#modelId2">
+        <i class="fa fa-fw fa-envelop"></i>Fund account
+        </a>
+      </li>
+      <li class="nav-item" v-if="type == 'sender' || type == 'subscriber'">
       <router-link 
         class="nav-link collapsed" 
         to="/profile">
         <i class="fa fa-fw fa-cog"></i>Profile
         </router-link>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="type == 'sender'">
         <router-link 
         class="nav-link collapsed" 
         to="/subscribers">
         <i class="fa fa-fw fa-cog"></i>Subscribers
         </router-link>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="type == 'sender'">
         <router-link 
         class="nav-link collapsed" 
         to="/my-topics">
         <i class="fa fa-fw fa-cog"></i>My topics
         </router-link>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="type == 'sender' || type == 'subscriber'">
         <router-link 
         class="nav-link collapsed" 
         to="/history">
@@ -57,7 +73,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="javascript:void(0)" @click="logout" >
           <i class="fas fa-fw fa-cog"></i>
           <span>Logout</span>
         </a>
@@ -71,6 +87,18 @@ import { login } from '../../controller/mixins';
 
 export default {
     name: "SideBar",
-    mixins: [login]
+    data(){
+      return {
+        type: ''
+      }
+    },
+    mixins: [login],
+    created: function() {
+      this.userData().then((re)=>{
+        this.userdata = re;
+        this.type = re.message.type
+        });
+      // console.log(user);
+      }
 }
 </script>

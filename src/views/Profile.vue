@@ -1,25 +1,20 @@
 <template>
   <!-- Page Wrapper -->
   <div id="wrapper">
-
     <!-- Sidebar -->
-        <SideBar/>
+    <SideBar />
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
       <!-- Main Content -->
       <div id="content">
-
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-        </nav>
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"></nav>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Profile</h1>
@@ -29,25 +24,33 @@
           <!-- Content Row -->
 
           <div class="row">
-
             <!-- Area Chart -->
             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <div
+                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                >
                   <h6 class="m-0 font-weight-bold text-primary">User Information</h6>
+                  <!-- {{userdata}} -->
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
                   <!-- <div class="chart-area">
                     <canvas id="myAreaChart"></canvas>
-                  </div> -->
-                  Name:
-                  <h6>Tasiu Kwaplong</h6>
-                  Email:
-                  <h6>tasiukwaplong@gmail.com(<span style="color:green">Confirmed</span>)</h6>  
-                  Phone:
-                  <h6>+234 9031 514 346</h6>  
+                  </div>-->
+                  <b>Username:</b>
+                  <h6>{{userdata.message.usernmae}}</h6>
+                  <b>Name:</b>
+                  <h6>{{userdata.message.name}}</h6>
+                  <b>Email:</b>
+                  <h6>{{userdata.message.email}}</h6>
+                  <b>Phone:</b>
+                  <h6>{{userdata.message.phone}}</h6>
+                  <b>Account type:</b>
+                  <h6>{{userdata.message.type}}
+                    <button style="float:right" class="btn btn-primary" v-if="userdata.message.type === 'subscriber'">Change to sender account</button>
+                  </h6>
                 </div>
               </div>
             </div>
@@ -56,7 +59,9 @@
             <div class="col-xl-4 col-lg-5">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <div
+                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                >
                   <h6 class="m-0 font-weight-bold text-primary">Change password</h6>
                 </div>
                 <!-- Card Body -->
@@ -64,51 +69,83 @@
                   <form class="user">
                     <div class="form-group">
                       <label>New Password</label>
-                        <input type="password" class="form-control"  placeholder="****">
+                      <input
+                        type="password"
+                        autocomplete="true"
+                        required
+                        v-model.trim="password"
+                        class="form-control"
+                        placeholder="****"
+                      />
                     </div>
                     <div class="form-group">
                       <label>Confirm password</label>
-                        <input type="password" class="form-control"  placeholder="******">
+                      <input
+                        type="password"
+                        autocomplete="true"
+                        required
+                        v-model.trim="repeatPassword"
+                        class="form-control"
+                        placeholder="****"
+                      />
                     </div>
-                    <a href="#" class="btn btn-primary btn-user btn-block">
-                      Change password
-                    </a>
+                    <div
+                      v-if="password != repeatPassword"
+                      class="alert alert-danger text-center"
+                    >Passwords do not match</div>
+                    <div
+                      v-if="errorMsg"
+                      class="alert alert-danger text-center"
+                    >{{errorMsg}}</div>
+                    <button
+                      type="button"
+                      @click="validateInput('submitBtn')"
+                      class="btn btn-primary btn-user btn-block"
+                      v-if="erroredPsw"
+                    >{{btnMsg}}</button>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-user btn-block disabled"
+                      v-else
+                      disabled="true"
+                    >{{btnMsg}}</button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="col-xl-8 col-lg-7">
-                <div class="card shadow mb-4">
-                  <!-- Card Header - Dropdown -->
-                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Links/codes</h6>
-                  </div>
-                  <!-- Card Body -->
-                  <div class="card-body">
-                    Refferal:
-                    <h6>https://myurl.com/ref-code</h6>
-                    Topics page:
-                    <h6>https://myurl.com/topic/user</h6>  
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary">Links/codes</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <b>Refferal:</b>
+                  <h6>{{refLink}}</h6>
+                  <div>
+                    <b>Code:</b>
+                    <h6>{{userCode}} <sub>You may share to senders you want to add you to their topics</sub></h6>
                   </div>
                 </div>
               </div>
+            </div>
           </div>
         </div>
         <!-- /.container-fluid -->
-
       </div>
       <!-- End of Main Content -->
 
       <!-- Footer -->
       <Footer />
       <!-- End of Footer -->
-
     </div>
     <!-- End of Content Wrapper -->
-
   </div>
   <!-- End of Page Wrapper -->
 </template>
@@ -120,20 +157,20 @@ import Footer from "./includes/Footer.vue";
 import SideBar from "./includes/SideBar.vue";
 import { login } from "../controller/mixins";
 import e from "../controller/easyAlert";
+import env from "../config";
 
 export default {
   name: "Profile",
   data() {
     return {
-      topicData: {
-        topic: "",
-        alias: "",
-        description: "",
-      },
-      errorMsg: "",
+      password: "",
+      refLink: '',
+      userCode: '',
+      repeatPassword: "",
       success: false,
-      errored: true,
-      btnMsg: "Add topic"
+      erroredPsw: true,
+      btnMsg: "Change password",
+      errorMsg: ''
     };
   },
   components: {
@@ -145,39 +182,47 @@ export default {
     validateInput: function() {
       //check if any input is empty
       // console.log(this.userdata)
-      let inputCheck =
-        !this.topicData.topic || !this.topicData.alias || !this.topicData.description ? true : false;
+      let inputCheck = !this.password || !this.repeatPassword ? true : false;
 
-      this.errored = inputCheck;
-      if (this.errored) {
+      this.erroredPsw = inputCheck;
+      // console.log(this.erroredPsw)
+      if (this.erroredPsw) {
         this.errorMsg =
-          "One or more of your input is not valid. Kindly check and correct where necessary";
+          "Invalid password provided";
       } else {
         this.btnMsg = "Processing ....";
         this.errorMsg = "";
-        this.addTopic();
+        this.changePassword();
       }
     },
-    addTopic: async function() {
+    changePassword: async function() {
       //Add topic to DB
+      if(this.password != this.repeatPassword){
+         this.erroredPsw = true;
+         this.errorMsg = 'Password do not match';
+        return
+      }
       const data = {
-        action: 'add-edit',
+        action: 'psw',
         user: this.userdata.message.usernmae,
-        topic: this.topicData.topic,
-        alias: this.topicData.alias,
-        description: this.topicData.description
+        password: this.password,
+        repeatPassword: this.repeatPassword
       };
-      const addTopic = await e.addTopic(data);
-      this.success = !addTopic.error;
-      // console.log(addTopic);
-      this.errored = addTopic.error;
-      this.errorMsg = addTopic.message;
-      addTopic.error ? "" : location.reload();
-      this.btnMsg = 'Add topic'
+      const changePsw = await e.changePsw(data);
+      this.success = !changePsw.error;
+      // console.log(changePsw);
+      this.erroredPsw = changePsw.error;
+      this.errorMsg = changePsw.message;
+      changePsw.error ? "" : location.reload();
+      this.btnMsg = "Change Password";
     }
   },
   created: function() {
-    this.userData().then((re)=>{this.userdata = re;});
+    this.userData().then(re => {
+      this.userdata = re;
+      this.refLink = `${env.API_URL}/register?${re.message.id}`;
+      this.userCode = `${re.message.code}`;
+    });
     // console.log(user);
   }
 };

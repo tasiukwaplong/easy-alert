@@ -4,6 +4,7 @@ import e from './easyAlert';
 export const login = {
     data() {
         return {
+            allTopics: '',
             userdata: {
                 error: true,
                 message: {
@@ -35,6 +36,17 @@ export const login = {
             // this.userdata = userData;
             // console.log(this.userdata)
             return this.userdata;
+        },
+        getAllTopics: async function(){
+            this.allTopics = await e.getTopics();
+            // this.userdata = userData;
+            return this.allTopics;
+        },
+        logout: function(){
+            // change session and remove cookie
+            document.cookie=`${env.USER_LOGIN}${this.session};expires=${new Date()}`;
+            // e.logout(this.session);
+            location.reload();
         }
     }
 }
@@ -50,7 +62,6 @@ export const getSession = {
                     c = c.substring(1);
                 }
                 if (c.indexOf(name) == 0) {
-                    // console.log(c.substring(name.length, c.length))
                     return c.substring(name.length, c.length);
                 }
             }
@@ -58,5 +69,3 @@ export const getSession = {
         }
     }
 }
-
-// module.exports = {login,getSession};

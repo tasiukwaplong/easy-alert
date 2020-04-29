@@ -1,5 +1,4 @@
 <template>
-  <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
     <SideBar />
@@ -10,14 +9,114 @@
       <!-- Main Content -->
       <div id="content">
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"></nav>
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+        </nav>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
           <!-- Page Heading -->
-          <h1 class="h3 mb-1 text-gray-800">Topics</h1>
-          <p class="mb-4">Topics you are subscribed to:</p>
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                      >Balance</div>
+                      <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">#{{userdata.message.balance.split(',')[1].split(':')[1]}}</div> -->
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                      >Topics subscribed to</div>
+                      <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">{{userdata.message.subscribe.split(':').length}}</div> -->
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="text-xs font-weight-bold text-info text-uppercase mb-1"
+                      >Referal bonus</div>
+                      <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                          <!-- <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">#{{userdata.message.balance.split(',')[0].split(':')[1] || '-'}}</div> -->
+                        </div>
+                        <!-- <div class="col"> -->
+                        <!-- <div> -->
+                        <sub>
+                          <a href="#">Withdraw bonus</a>
+                        </sub>
+                        <!-- <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div> -->
+                        <!-- </div> -->
+                        <!-- </div> -->
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+                      >Account type</div>
+                      <div
+                        class="h5 mb-0 font-weight-bold text-gray-800"
+                      >{{userdata.message.type}}</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <!-- Content Row -->
           <div class="row">
@@ -50,7 +149,7 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group">
-                <label for="search" class="col-sm-12 control-label">Subscribe to a topic</label>
+                <h3>SUBSCRIBE TO A TOPIC</h3>
                 <div class="col-sm-12">
                   <i class="fas fa-search"></i>
                   <div class="form-group">
@@ -84,19 +183,17 @@
     </div>
     <!-- End of Content Wrapper -->
   </div>
-  <!-- End of Page Wrapper -->
 </template>
-
 
 <script>
 // @ is an alias to /src
-import Footer from "./includes/Footer.vue";
-import SideBar from "./includes/SideBar.vue";
-import { login } from "../controller/mixins";
-import e from "../controller/easyAlert";
+import Footer from "./Footer.vue";
+import SideBar from "./SideBar.vue";
+import { login } from "../../controller/mixins";
+import e from "../../controller/easyAlert";
 
 export default {
-  name: "My_topics",
+  name: "Subscriber",
   data() {
     return {
       errored: false,

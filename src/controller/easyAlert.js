@@ -24,7 +24,7 @@ const obtainSession = (cred) => {
     })
     .catch(function (error) {
       // console.log(error);
-      return {error:true,message:`We can not register you at the moment. Kindly check back later${error}`};
+      return {error:true,message:`Unable to login at the moment. Kindly check back later${error}`};
     });
 }
 const getUserData = (session) => {
@@ -45,6 +45,7 @@ const getUserData = (session) => {
     .then(function (response) {
       const message = (response.status === 200) ? response.data.message : emptyData;
       const error = (response.status === 200) ? response.data.error : true;
+    //  console.log(message)
       return {error, message};
     })
     .catch(function () {
@@ -65,4 +66,57 @@ const addTopic = (data) => {
      return {error:true,message:''};
    });
 }
-module.exports = {registerUser, obtainSession, getUserData, addTopic}
+const changePsw = (data) => {
+  // console.log(data);return
+ return axios.post(`${env.API_URL}/update`, data)
+   .then(function (response) {
+     const message = (response.status === 200) ? response.data.message : '';
+     const error = (response.status === 200) ? response.data.error : true;
+     return {error, message};
+   })
+   .catch(function () {
+     // console.log(error);
+     return {error:true,message:''};
+   });
+}
+
+const getTopics = (session) => {
+ return axios.get(`${env.API_URL}/all-topics`, session)
+   .then(function (response) {
+     const message = (response.status === 200) ? response.data.message : 'Error fetching';
+     const error = (response.status === 200) ? response.data.error : true;
+     return {error, message};
+   })
+   .catch(function () {
+     // console.log(error);
+     return {error:true,message:'Error fetching topics'};
+   });
+}
+
+const updateTopic = (data) => {
+  return axios.post(`${env.API_URL}/updatetopics`, data)
+    .then(function (response) {
+      const message = (response.status === 200) ? response.data.message : 'Error updating topics';
+      const error = (response.status === 200) ? response.data.error : true;
+      return {error, message};
+    })
+    .catch(function () {
+      // console.log(error);
+      return {error:true,message:'Error updating topics'};
+    });
+ }
+ const getUserHistroy = (data) => {
+   console.log(data)
+  return axios.post(`${env.API_URL}/history`, data)
+    .then(function (response) {
+      const message = (response.status === 200) ? response.data.message : 'Error fetching history';
+      const error = (response.status === 200) ? response.data.error : true;
+      return {error, message};
+    })
+    .catch(function () {
+      // console.log(error);
+      return {error:true,message:'Error updating topics'};
+    });
+ }
+
+module.exports = {registerUser, obtainSession, getUserData, addTopic, changePsw, getTopics, updateTopic, getUserHistroy}

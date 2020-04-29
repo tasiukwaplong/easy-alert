@@ -38,7 +38,7 @@
                       class="form-control form-control-user"
                       v-model="password"
                       autocomplete="true"
-                      placeholder="Repeat Password"
+                      placeholder="Password"
                     />
                   </div>
                 </div>
